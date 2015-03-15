@@ -5,6 +5,7 @@
 #include "xmlhelp.h"
 #include <vector>
 #include <algorithm>
+#include "PianoNotes.h"
 
 CSynthesizer::CSynthesizer()
 : m_time(0)
@@ -82,6 +83,10 @@ bool CSynthesizer::Generate(double * frame)
 		if (note->Instrument() == L"ToneInstrument")
 		{
 			instrument = new CToneInstrument(GetBeatsPerMinute());
+		}
+		else if (note->Instrument() == L"Piano"){
+			m_pianofactory.SetNote(note);
+			instrument = m_pianofactory.CreatePiano();
 		}
 
 		// Configure the instrument object
